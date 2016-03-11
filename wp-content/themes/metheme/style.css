@@ -285,10 +285,12 @@ h4,
 h5,
 h6 {
 	clear: both;
+	font-family: open_sansregular, sans-serif;
 }
 
 p {
 	margin-bottom: 1.5em;
+	font-family: abeezeeregular, sans-serif;
 }
 
 dfn,
