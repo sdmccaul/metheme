@@ -22,10 +22,10 @@
  */
 function metheme_custom_header_setup() {
 	add_theme_support( 'custom-header', apply_filters( 'metheme_custom_header_args', array(
-		'default-image'          => '',
+		'default-image'          => 'http://www.gravatar.com/avatar/2e31d7bff4091c1b6f9b187f3e9d83e3',
 		'default-text-color'     => '000000',
-		'width'                  => 1000,
-		'height'                 => 250,
+		'width'                  => 150,
+		'height'                 => 150,
 		'flex-height'            => true,
 		'wp-head-callback'       => 'metheme_header_style',
 	) ) );
