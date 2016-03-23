@@ -165,3 +165,22 @@ require get_template_directory() . '/inc/customizer.php';
  * Load Jetpack compatibility file.
  */
 require get_template_directory() . '/inc/jetpack.php';
+
+function custom_post_feed() {
+	$args = array(
+		'labels'			=> 'Feed data',
+		'description'		=> 'Data from external feeds',
+		'public'			=> true,
+		'show_ui'			=> true,
+		'capability_type'	=> 'post',
+		'hierarchical'		=> false,
+		'rewrite'			=> array('slug' => 'feed-data'),
+		'query_var'			=> true,
+		'menu_icon'			=> 'dashicons-controls-repeat',
+		'menu_position'		=> 5,
+		'supports'			=> array( 'title', 'editor', 'thumbnail', 'excerpt'),
+		'has_archive'		=> true,
+	);
+	register_post_type( 'feed-data', $args ); 
+}
+add_action( 'init', 'custom_post_feed' );
