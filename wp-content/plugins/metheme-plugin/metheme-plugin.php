@@ -25,7 +25,7 @@ function custom_post_feed_init() {
 		'has_archive'		=> true,
 		'menu_icon'			=> 'dashicons-controls-repeat',
 		'menu_position'		=> 5,
-		'supports'			=> array('title','excerpt','custom-fields'),
+		'supports'			=> array('title','excerpt'),
 		'register_meta_box_cb' => 'add_feed_data_metaboxes',
 	);
 	register_post_type( 'feed-data', $args );
@@ -40,8 +40,7 @@ function add_feed_data_metaboxes() {
 }
 // The Event Location Metabox
 
-function feed_data_source() {
-	global $post;
+function feed_data_source( $post ) {
 	
 	// Noncename needed to verify where the data originated
 	echo '<input type="hidden" name="feedmeta_noncename" id="feedmeta_noncename" value="' . 
@@ -55,8 +54,7 @@ function feed_data_source() {
 
 }
 
-function feed_data_link() {
-	global $post;
+function feed_data_link( $post ) {
 	
 	// Noncename needed to verify where the data originated
 	echo '<input type="hidden" name="feedmeta_noncename" id="feedmeta_noncename" value="' . 
@@ -70,8 +68,7 @@ function feed_data_link() {
 
 }
 
-function feed_data_image() {
-	global $post;
+function feed_data_image( $post ) {
 	
 	// Noncename needed to verify where the data originated
 	echo '<input type="hidden" name="feedmeta_noncename" id="feedmeta_noncename" value="' . 
@@ -85,8 +82,7 @@ function feed_data_image() {
 
 }
 
-function feed_data_date() {
-	global $post;
+function feed_data_date( $post ) {
 	
 	// Noncename needed to verify where the data originated
 	echo '<input type="hidden" name="feedmeta_noncename" id="feedmeta_noncename" value="' . 
