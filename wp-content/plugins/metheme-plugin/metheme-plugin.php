@@ -25,7 +25,7 @@ function custom_post_feed_init() {
 		'has_archive'		=> true,
 		'menu_icon'			=> 'dashicons-controls-repeat',
 		'menu_position'		=> 5,
-		'supports'			=> array( 'title','custom-fields')
+		'supports'			=> array('title','excerpt','custom-fields')
 	);
 	register_post_type( 'feed-data', $args );
 	flush_rewrite_rules();
