@@ -34,8 +34,10 @@ function custom_post_feed_init() {
 
 function add_feed_data_metaboxes() {
 	add_meta_box('feed_data_source', 'Data Source', 'feed_data_source', 'feed-data', 'normal', 'default');
+	add_meta_box('feed_data_link', 'Data Link', 'feed_data_link', 'feed-data', 'normal', 'default');
+	add_meta_box('feed_data_image', 'Image Data', 'feed_data_image', 'feed-data', 'normal', 'default');
+	add_meta_box('feed_data_date', 'Data Create Date', 'feed_data_date', 'feed-data', 'normal', 'default');
 }
-
 // The Event Location Metabox
 
 function feed_data_source() {
@@ -50,6 +52,51 @@ function feed_data_source() {
 	
 	// Echo out the field
 	echo '<input type="text" name="_source" value="' . $source  . '" class="widefat" />';
+
+}
+
+function feed_data_link() {
+	global $post;
+	
+	// Noncename needed to verify where the data originated
+	echo '<input type="hidden" name="feedmeta_noncename" id="feedmeta_noncename" value="' . 
+	wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	
+	// Get the location data if its already been entered
+	$source = get_post_meta($post->ID, '_link', true);
+	
+	// Echo out the field
+	echo '<input type="text" name="_link" value="' . $source  . '" class="widefat" />';
+
+}
+
+function feed_data_image() {
+	global $post;
+	
+	// Noncename needed to verify where the data originated
+	echo '<input type="hidden" name="feedmeta_noncename" id="feedmeta_noncename" value="' . 
+	wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	
+	// Get the location data if its already been entered
+	$source = get_post_meta($post->ID, '_image', true);
+	
+	// Echo out the field
+	echo '<input type="text" name="_image" value="' . $source  . '" class="widefat" />';
+
+}
+
+function feed_data_date() {
+	global $post;
+	
+	// Noncename needed to verify where the data originated
+	echo '<input type="hidden" name="feedmeta_noncename" id="feedmeta_noncename" value="' . 
+	wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	
+	// Get the location data if its already been entered
+	$source = get_post_meta($post->ID, '_date', true);
+	
+	// Echo out the field
+	echo '<input type="text" name="_date" value="' . $source  . '" class="widefat" />';
 
 }
 
