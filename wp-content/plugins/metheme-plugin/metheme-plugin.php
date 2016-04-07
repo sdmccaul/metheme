@@ -72,6 +72,33 @@ function feed_data_date( $post ) {
 
 }
 
+function save_feed_meta($post_id, $post) {
+
+	// if ( !wp_verify_nonce( $_POST['_wpnonce'] )) {
+	// 	return $post->ID;
+	// }
+
+	// if ( !current_user_can( 'edit_post', $post->ID )) {
+	// 	return $post->ID;
+	// }
+	
+	$feed_meta['_source'] = $_POST['_source'];
+	$feed_meta['_link'] = $_POST['_link'];
+	$feed_meta['_image'] = $_POST['_image'];
+	$feed_meta['_date'] = $_POST['_date'];
+
+	foreach ($feed_meta as $key => $value) { 
+		if(!$value) {
+			delete_post_meta($post->ID, $key);
+		} else {
+			update_post_meta($post->ID, $key, $value);
+		}
+	}
+
+}
+
+add_action('save_post', 'save_feed_meta', 1, 2); // save the custom fields
+
 
 add_action( 'init', 'custom_post_feed_init' );
 
