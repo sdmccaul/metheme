@@ -74,14 +74,6 @@ function feed_data_date( $post ) {
 
 function save_feed_meta($post_id, $post) {
 
-	// if ( !wp_verify_nonce( $_POST['_wpnonce'] )) {
-	// 	return $post->ID;
-	// }
-
-	// if ( !current_user_can( 'edit_post', $post->ID )) {
-	// 	return $post->ID;
-	// }
-	
 	$feed_meta['_source'] = $_POST['_source'];
 	$feed_meta['_link'] = $_POST['_link'];
 	$feed_meta['_image'] = $_POST['_image'];
