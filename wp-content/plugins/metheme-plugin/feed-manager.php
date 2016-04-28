@@ -1,17 +1,25 @@
 <?php
 
-$ch = curl_init("https://api.github.com/users/sdmccaul/events");
-curl_setopt($ch,CURLOPT_USERAGENT, 'sdmccaul');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-$result = curl_exec($ch);
-curl_close($ch);
+// $ch = curl_init("https://api.github.com/users/sdmccaul/events");
+// curl_setopt($ch,CURLOPT_USERAGENT, 'sdmccaul');
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+// $result = curl_exec($ch);
+// curl_close($ch);
 
 
+// $json = json_decode($result, true);
+// foreach($json as $j) {
+// 	echo $j["created_at"];
+// }
+
+
+include('./library/httpful.phar');
+
+$result = \Httpful\Request::get('https://api.github.com/users/sdmccaul/events')->send();
 $json = json_decode($result, true);
 foreach($json as $j) {
 	echo $j["created_at"];
 }
-
 // function programmatically_create_post() {
 
 // 	// Initialize the page ID to -1. This indicates no action has been taken.
