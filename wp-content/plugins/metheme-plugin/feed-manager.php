@@ -13,13 +13,25 @@
 // }
 
 
-include('./library/httpful.phar');
+// include('./library/httpful.phar');
 
-$result = \Httpful\Request::get('https://api.github.com/users/sdmccaul/events')->send();
-$json = json_decode($result, true);
-foreach($json as $j) {
-	echo $j["created_at"];
-}
+// $result = \Httpful\Request::get('https://api.github.com/users/sdmccaul/events')->send();
+// $json = json_decode($result, true);
+// foreach($json as $j) {
+// 	echo $j["created_at"];
+// }
+include('./library/guzzle.phar');
+use GuzzleHttp\Client;
+
+$client = new Client(['base_uri' => 'https://api.github.com/']);
+$response = $client->request('GET', 'users/sdmccaul/repos');
+echo $response->getBody();
+
+// $json = json_decode($response, true);
+// foreach($json as $j) {
+// 	echo $j["created_at"];
+// }
+
 // function programmatically_create_post() {
 
 // 	// Initialize the page ID to -1. This indicates no action has been taken.
