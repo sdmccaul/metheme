@@ -24,13 +24,16 @@ include('./library/guzzle.phar');
 use GuzzleHttp\Client;
 
 $client = new Client(['base_uri' => 'https://api.github.com/']);
-$response = $client->request('GET', 'users/sdmccaul/repos');
-echo $response->getBody();
-
-// $json = json_decode($response, true);
-// foreach($json as $j) {
-// 	echo $j["created_at"];
-// }
+$response = $client->request('GET', 'users/sdmccaul/events');
+$jresp = json_decode($response->getBody(), true);
+foreach($jresp as $j) {
+	if ($j["type"] == "PushEvent") {
+		foreach($j["payload"]["commits"] as $commit) {
+			echo $commit["url"];
+			echo "\n";
+		}
+	}
+}
 
 // function programmatically_create_post() {
 
