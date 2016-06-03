@@ -23,6 +23,8 @@
 include('./library/guzzle.phar');
 use GuzzleHttp\Client;
 
+date_default_timezone_set('UTC');
+
 $client = new Client(['base_uri' => 'https://api.github.com/']);
 $response = $client->request('GET', 'users/sdmccaul/events');
 $jresp = json_decode($response->getBody(), true);
