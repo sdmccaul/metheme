@@ -28,12 +28,10 @@ date_default_timezone_set('UTC');
 $client = new Client(['base_uri' => 'https://api.github.com/']);
 $response = $client->request('GET', 'users/sdmccaul/events');
 $jresp = json_decode($response->getBody(), true);
-$now = New DateTime(date('Y-m-d h:i:s', time()));
+$now = New DateTime(date('Y-m-d H:i:s', time()));
 foreach($jresp as $j) {
 	$zoo = New DateTime($j['created_at']);
 	$interval = $now->diff($zoo);
-	echo $interval->format('%Y-%m-%d %H:%i:%s');
-	echo "\n";
 	// if ($j["type"] == "PushEvent" && ) {
 	// 	foreach($j["payload"]["commits"] as $commit) {
 	// 		echo $commit["url"];
