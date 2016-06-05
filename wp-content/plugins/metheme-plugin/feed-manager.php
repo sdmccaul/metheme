@@ -29,15 +29,18 @@ $client = new Client(['base_uri' => 'https://api.github.com/']);
 $response = $client->request('GET', 'users/sdmccaul/events');
 $jresp = json_decode($response->getBody(), true);
 $now = New DateTime(date('Y-m-d H:i:s', time()));
+$interval = 7;
 foreach($jresp as $j) {
-	$zoo = New DateTime($j['created_at']);
-	$interval = $now->diff($zoo);
-	// if ($j["type"] == "PushEvent" && ) {
-	// 	foreach($j["payload"]["commits"] as $commit) {
-	// 		echo $commit["url"];
-	// 		echo "\n";
-	// 	}
-	// }
+	$createdAt = New DateTime($j['created_at']);
+	$dateDelta = $now->diff($createdAt);
+	if (($j["type"] == "PushEvent") && ($dateDelta->days < $interval)) {
+		echo $j['created_at'],"\n";
+		foreach($j["payload"]["commits"] as $commit) {
+			echo "\t",$commit["message"],"\n";
+			echo "\t",$commit["url"],"\n\n";
+		}
+		echo "\n";
+	}
 }
 
 // function programmatically_create_post() {
