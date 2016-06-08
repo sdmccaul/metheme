@@ -30,18 +30,37 @@ $response = $client->request('GET', 'users/sdmccaul/events');
 $jresp = json_decode($response->getBody(), true);
 $now = New DateTime(date('Y-m-d H:i:s', time()));
 $interval = 7;
+$results = array();
 foreach($jresp as $j) {
 	$createdAt = New DateTime($j['created_at']);
 	$dateDelta = $now->diff($createdAt);
 	if (($j["type"] == "PushEvent") && ($dateDelta->days < $interval)) {
-		echo $j['created_at'],"\n";
+		$res = array();
+		$res["commits"] = array();
+		$res["created_at"] = $j["created_at"];
 		foreach($j["payload"]["commits"] as $commit) {
-			echo "\t",$commit["message"],"\n";
-			echo "\t",$commit["url"],"\n\n";
+			$r = array();
+			$r["message"] = $commit["message"];
+			$r["url"] = $commit["url"];
+			$res["commits"][] = $r;
 		}
-		echo "\n";
+		$results[] = $res;
 	}
 }
+print_r($results);
+
+
+// $my_post = array(
+//     'post_title' => $_SESSION['booking-form-title'],
+//     'post_date' => $_SESSION['cal_startdate'],
+//     'post_content' => 'This is my post.',
+//     'post_status' => 'publish',
+//     'post_type' => 'booking',
+// );
+// $the_post_id = wp_insert_post( $my_post );
+
+
+// __update_post_meta( $the_post_id, 'my-custom-field', 'my_custom_field_value' );
 
 // function programmatically_create_post() {
 
