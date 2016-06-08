@@ -36,14 +36,22 @@ foreach($jresp as $j) {
 	$dateDelta = $now->diff($createdAt);
 	if (($j["type"] == "PushEvent") && ($dateDelta->days < $interval)) {
 		$res = array();
-		$res["commits"] = array();
 		$res["created_at"] = $j["created_at"];
+		$index = 0;
+		$list = "<ul>\n";
 		foreach($j["payload"]["commits"] as $commit) {
-			$r = array();
-			$r["message"] = $commit["message"];
-			$r["url"] = $commit["url"];
-			$res["commits"][] = $r;
+			$index += 1; 
+			$link = "<li><a href=\"".$commit["url"]."\">".$commit["message"]."</a></li>\n";
+			$list .= $link;
 		}
+		$list .= "</ul>";
+		$res["post_content"] = $list;
+		if ($index > 1) {
+			$commitText = " commits ";
+		} else {
+			$commitText = " commit ";
+		}
+		$res['post_title'] = "Pushed ".strval($index).$commitText."to GitHub";
 		$results[] = $res;
 	}
 }
@@ -55,7 +63,7 @@ print_r($results);
 //     'post_date' => $_SESSION['cal_startdate'],
 //     'post_content' => 'This is my post.',
 //     'post_status' => 'publish',
-//     'post_type' => 'booking',
+//     'post_type' => 'feed-data',
 // );
 // $the_post_id = wp_insert_post( $my_post );
 
