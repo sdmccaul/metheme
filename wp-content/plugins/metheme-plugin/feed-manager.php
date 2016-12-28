@@ -20,6 +20,9 @@
 // foreach($json as $j) {
 // 	echo $j["created_at"];
 // }
+// include('../../../wp-includes/post.php');
+// include('../../../wp-includes/user.php');
+// include('../../../wp-includes/*');
 include('./library/guzzle.phar');
 use GuzzleHttp\Client;
 
@@ -29,7 +32,7 @@ $client = new Client(['base_uri' => 'https://api.github.com/']);
 $response = $client->request('GET', 'users/sdmccaul/events');
 $jresp = json_decode($response->getBody(), true);
 $now = New DateTime(date('Y-m-d H:i:s', time()));
-$interval = 7;
+$interval = 1;
 $results = array();
 foreach($jresp as $j) {
 	$createdAt = New DateTime($j['created_at']);
@@ -52,11 +55,27 @@ foreach($jresp as $j) {
 			$commitText = " commit ";
 		}
 		$res['post_title'] = "Pushed ".strval($index).$commitText."to GitHub";
+		$res['feed_source'] = "github";
 		$results[] = $res;
 	}
 }
 print_r($results);
 
+foreach($results as $res) {
+	$feed_post = array(
+	    'post_title' => $res['post_title'],
+	    'post_date' => $res['created_at'],
+	    'post_content' => $res['post_content'],
+	    'post_status' => 'publish',
+	    'post_type' => 'feed-data'
+	);
+	$post_id = wp_insert_post($feed_post);
+
+	if ($post_id) {
+		add_post_meta($post_id, 'feed_data_source', $res['feed_source']);
+	}
+}
+// http://wordpress.stackexchange.com/questions/106973/wp-insert-post-or-similar-for-custom-post-type
 
 // $my_post = array(
 //     'post_title' => $_SESSION['booking-form-title'],
